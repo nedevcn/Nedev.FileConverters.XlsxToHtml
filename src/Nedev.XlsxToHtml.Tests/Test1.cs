@@ -42,6 +42,9 @@ namespace Nedev.XlsxToHtml.Tests
             // negative cell should turn blue
             Assert.IsTrue(html.Contains("color:#0000FF"));
             Assert.IsTrue(html.Contains("-1,234.56"));
+            // hex color formatting 00FF00 for positive and FF00FF for negative
+            Assert.IsTrue(html.Contains("color:#00FF00"));
+            Assert.IsTrue(html.Contains("color:#FF00FF"));
         }
 
         private static void CreateMinimalWorkbook(string path)
@@ -95,11 +98,12 @@ namespace Nedev.XlsxToHtml.Tests
             Add("xl/styles.xml",
 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
 "<styleSheet xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\">\n" +
-"  <numFmts count=\"4\">\n" +
+"  <numFmts count=\"5\">\n" +
 "    <numFmt numFmtId=\"164\" formatCode=\"#,##0.00\"/>\n" +
 "    <numFmt numFmtId=\"165\" formatCode=\"0.00%\"/>\n" +
 "    <numFmt numFmtId=\"166\" formatCode=\"# ?/??\"/>\n" +
 "    <numFmt numFmtId=\"167\" formatCode=\"[Red]#,##0.00;[Blue]-#,##0.00\"/>\n" +
+"    <numFmt numFmtId=\"168\" formatCode=\"[00FF00]#,##0;[FF00FF]-#,##0\"/>\n" +
 "  </numFmts>\n" +
 "  <fonts count=\"1\">\n" +
 "    <font><b/><color rgb=\"FFFF0000\"/></font>\n" +
@@ -107,12 +111,13 @@ namespace Nedev.XlsxToHtml.Tests
 "  <fills count=\"1\">\n" +
 "    <fill><patternFill patternType=\"solid\"><fgColor rgb=\"FFFFFF00\"/></patternFill></fill>\n" +
 "  </fills>\n" +
-"  <cellXfs count=\"5\">\n" +
+"  <cellXfs count=\"6\">\n" +
 "    <xf numFmtId=\"0\" fontId=\"0\" fillId=\"0\"/>\n" +
 "    <xf numFmtId=\"164\" fontId=\"0\" fillId=\"0\"/>\n" +
 "    <xf numFmtId=\"165\" fontId=\"0\" fillId=\"0\"/>\n" +
 "    <xf numFmtId=\"166\" fontId=\"0\" fillId=\"0\"/>\n" +
 "    <xf numFmtId=\"167\" fontId=\"0\" fillId=\"0\"/>\n" +
+"    <xf numFmtId=\"168\" fontId=\"0\" fillId=\"0\"/>\n" +
 "  </cellXfs>\n" +
 "</styleSheet>");
 
@@ -137,6 +142,9 @@ namespace Nedev.XlsxToHtml.Tests
 "    </row>\n" +
 "    <row r=\"6\">\n" +
 "      <c r=\"E6\" t=\"n\" s=\"4\"><v>-1234.56</v></c>\n" +
+"    </row>\n" +
+"    <row r=\"7\">\n" +
+"      <c r=\"F7\" t=\"n\" s=\"5\"><v>789</v></c>\n" +
 "    </row>\n" +
 "  </sheetData>\n" +
 "  <mergeCells>\n" +

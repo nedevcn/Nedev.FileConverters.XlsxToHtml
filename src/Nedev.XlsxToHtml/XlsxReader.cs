@@ -400,15 +400,31 @@ namespace Nedev.XlsxToHtml
             var m = System.Text.RegularExpressions.Regex.Match(fmt, "\[([^\]]+)\]");
             if (m.Success)
             {
-                var text = m.Groups[1].Value;
-                // simple mapping for common colors
-                string? hex = text.ToLowerInvariant() switch
+                var text = m.Groups[1].Value.Trim();
+                string? hex = null;
+                // if it looks like a hex code (6 or 8 hex digits)
+                if (System.Text.RegularExpressions.Regex.IsMatch(text, "^[0-9A-Fa-f]{6,8}$"))
                 {
-                    "red" => "#FF0000",
-                    "blue" => "#0000FF",
-                    "green" => "#008000",
-                    _ => null
-                };
+                    var h = text;
+                    if (h.Length == 6) hex = "#" + h;
+                    else if (h.Length == 8) hex = "#" + h.Substring(2); // drop alpha
+                }
+                else
+                {
+                    switch (text.ToLowerInvariant())
+                    {
+                        case "black": hex = "#000000"; break;
+                        case "white": hex = "#FFFFFF"; break;
+                        case "red": hex = "#FF0000"; break;
+                        case "blue": hex = "#0000FF"; break;
+                        case "green": hex = "#008000"; break;
+                        case "yellow": hex = "#FFFF00"; break;
+                        case "magenta": hex = "#FF00FF"; break;
+                        case "cyan": hex = "#00FFFF"; break;
+                        // add more named colors as needed
+                        default: hex = null; break;
+                    }
+                }
                 fmt = StripColor(fmt); // remove all bracket parts
                 return hex ?? string.Empty;
             }
