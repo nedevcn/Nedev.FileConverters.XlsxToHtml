@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Nedev.XlsxToHtml.Cli/Nedev.XlsxToHtml.Cli.csproj" />
+    <Project Path="src/Nedev.XlsxToHtml.Tests/Nedev.XlsxToHtml.Tests.csproj" />
+    <Project Path="src/Nedev.XlsxToHtml/Nedev.XlsxToHtml.csproj" />
+  </Folder>
+</Solution>
